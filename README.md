@@ -1,2 +1,2 @@
 # TimingApplication
-shiggy diggy
+shiggy
