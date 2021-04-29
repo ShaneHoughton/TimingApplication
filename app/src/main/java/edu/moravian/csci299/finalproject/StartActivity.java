@@ -53,8 +53,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("spinnerEventSelected", event);
             startActivity(intent);
         } else {
-            Intent intentTwoPlayer = new Intent(this, HelpActivity.class);
-            startActivity(intentTwoPlayer);
+            Intent intentHelp = new Intent(this, HelpActivity.class);
+            startActivity(intentHelp);
         }
     }
 
