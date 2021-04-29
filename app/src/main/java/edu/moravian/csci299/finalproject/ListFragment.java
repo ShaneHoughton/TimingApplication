@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -137,7 +139,10 @@ public class ListFragment extends Fragment {
             Log.d("event", "onOptionsItemSelected: ");
 
             //Make new runner
-            runnerList.runners.add(new Runner("Shane", 2, 1));
+            runnerList.runners.add(new Runner("Name", 2, 12));
+            list.getAdapter().notifyDataSetChanged();
+
+
             Log.d("event", "New Runner");
 
             return true;
@@ -147,6 +152,7 @@ public class ListFragment extends Fragment {
     }
 
 
+
     private class EventViewHolder extends RecyclerView.ViewHolder {
         public Runner runner;
 
@@ -154,6 +160,7 @@ public class ListFragment extends Fragment {
         private EditText name;
         private TextView lapsToGo;
         private Button lap;
+        private EditText number;
 
         /**
          * Sets all fields to their respective views.
@@ -165,6 +172,7 @@ public class ListFragment extends Fragment {
             name = runnerView.findViewById(R.id.runnerName);
             lapsToGo = runnerView.findViewById(R.id.lapsToGo);
             lap = runnerView.findViewById(R.id.lap);
+            number = runnerView.findViewById(R.id.number);
         }
     }
 
@@ -199,6 +207,7 @@ public class ListFragment extends Fragment {
             Runner item = runnerList.runners.get(position);
             holder.name.setText(item.name);
             holder.lapsToGo.setText(Integer.toString(item.lapsToGo));
+            holder.number.setText(Integer.toString(item.number));
 
             holder.lap.setOnClickListener(v -> {
                 if (item.lapsToGo > 0) {
@@ -206,6 +215,7 @@ public class ListFragment extends Fragment {
                     holder.lapsToGo.setText(Integer.toString(item.lapsToGo));
                 }
             });
+
         }
 
         /**
@@ -215,7 +225,6 @@ public class ListFragment extends Fragment {
         public int getItemCount() {
             return runnerList.runners.size();
         }
-
 
     }
 

@@ -8,7 +8,6 @@ public class Runner {
 
     public Runner(String name, int number, int lapsToGo){
         this.name = name;
-        this.number = number;
         this.lapsToGo = lapsToGo;
     }
 }

@@ -12,5 +12,7 @@ public class RunnerList extends ViewModel {
 
     public RunnerList() {
         runners.add(new Runner("Shane", 1, 12));
+        runners.add(new Runner("Dom", 2, 12));
+
     }
 }
