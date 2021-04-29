@@ -11,8 +11,8 @@ public class RunnerList extends ViewModel {
     List<Runner> runners = new ArrayList<>();
 
     public RunnerList() {
-        runners.add(new Runner("Shane", 1, 12));
-        runners.add(new Runner("Dom", 2, 12));
+//        runners.add(new Runner("Shane", 1, 12));
+//        runners.add(new Runner("Dom", 2, 12));
 
     }
 }

@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -15,12 +18,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
      * The Spinner for the menus
      */
     private Spinner spinner;
+    HashMap<String, Integer> raceLaps = new HashMap<String, Integer>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        raceLaps.put("3000", 7);
+        raceLaps.put("5000", 12);
+        raceLaps.put("10000", 25);
+
 
         // Set up the difficulty spinner
         spinner = findViewById(R.id.difficultySpinner);
@@ -50,7 +58,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         if (v == findViewById(R.id.playButton)) {
             Intent intent = new Intent(this, RunningActivity.class);
             String event = (spinner.getSelectedItem()).toString();
-            intent.putExtra("spinnerEventSelected", event);
+            intent.putExtra("laps", Objects.requireNonNull(raceLaps.get(event)).intValue());
             startActivity(intent);
         } else {
             Intent intentHelp = new Intent(this, HelpActivity.class);

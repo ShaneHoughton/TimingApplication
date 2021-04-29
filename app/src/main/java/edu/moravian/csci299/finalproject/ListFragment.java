@@ -57,6 +57,7 @@ public class ListFragment extends Fragment {
     //private Callbacks callbacks;
     private RunnerList runnerList ;
 
+    private int laps;
 
     /**
      * Use this factory method to create a new instance of this fragment that
@@ -83,6 +84,10 @@ public class ListFragment extends Fragment {
         args.putSerializable(ARG_DATE, date);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setLaps(int laps){
+        this.laps = laps;
     }
 
 
@@ -139,7 +144,7 @@ public class ListFragment extends Fragment {
             Log.d("event", "onOptionsItemSelected: ");
 
             //Make new runner
-            runnerList.runners.add(new Runner("Name", 2, 12));
+            runnerList.runners.add(new Runner("Name",0 , laps));
             list.getAdapter().notifyDataSetChanged();
 
 
