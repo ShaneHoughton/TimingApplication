@@ -57,7 +57,7 @@ public class ListFragment extends Fragment {
     //private Callbacks callbacks;
     private RunnerList runnerList ;
 
-    private int laps;
+    private double laps;
 
     /**
      * Use this factory method to create a new instance of this fragment that
@@ -86,7 +86,7 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
-    public void setLaps(int laps){
+    public void setLaps(double laps){
         this.laps = laps;
     }
 
@@ -211,15 +211,21 @@ public class ListFragment extends Fragment {
         public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
             Runner item = runnerList.runners.get(position);
             holder.name.setText(item.name);
-            holder.lapsToGo.setText(Integer.toString(item.lapsToGo));
+            holder.lapsToGo.setText(Double.toString(item.lapsToGo));
             holder.number.setText(Integer.toString(item.number));
 
             holder.lap.setOnClickListener(v -> {
-                if (item.lapsToGo > 0) {
+                if(item.lapsToGo == 7.5 || item.lapsToGo == 12.5){
+                    item.lapsToGo = item.lapsToGo - 0.5;
+                    holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
+                }
+
+                else if (item.lapsToGo > 0) {
                     item.lapsToGo--;
-                    holder.lapsToGo.setText(Integer.toString(item.lapsToGo));
+                    holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
                 }
             });
+
 
         }
 
@@ -233,28 +239,29 @@ public class ListFragment extends Fragment {
 
     }
 
-    public String projectedTime(long time){
-//        paceCalculator p = new paceCalculator();
-        float distance = laps * 400;
-        float f = time/distance;
-
-        // Take Input in Long otherwise
-        // overflow occur for some inputs.
-        long milliseconds = (long)(p.event * f);
-
-        // formula for conversion for
-        // milliseconds to minutes.
-        long minutes = (milliseconds / 1000) / 60;
-
-        // formula for conversion for
-        // milliseconds to seconds
-        long seconds = (milliseconds / 1000) % 60;
-
-        // Print the output
-        System.out.println(milliseconds + " Milliseconds = "
-                + minutes + " minutes and "
-                + seconds + " seconds.");
-    }
+//    public String projectedTime(long time){
+////        paceCalculator p = new paceCalculator();
+//        float distance = (float)laps * 400;
+//        float f = time/distance;
+//
+//        // Take Input in Long otherwise
+//        // overflow occur for some inputs.
+//
+////        long milliseconds = (long)(p.event * f);
+//
+//        // formula for conversion for
+//        // milliseconds to minutes.
+//        long minutes = (milliseconds / 1000) / 60;
+//
+//        // formula for conversion for
+//        // milliseconds to seconds
+//        long seconds = (milliseconds / 1000) % 60;
+//
+//        // Print the output
+//        System.out.println(milliseconds + " Milliseconds = "
+//                + minutes + " minutes and "
+//                + seconds + " seconds.");
+//    }
 
 }
 

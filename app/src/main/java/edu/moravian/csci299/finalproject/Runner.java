@@ -4,9 +4,9 @@ public class Runner {
     //... need to do this
     String name;
     int number;
-    int lapsToGo;
+    double lapsToGo;
 
-    public Runner(String name, int number, int lapsToGo){
+    public Runner(String name, int number, double lapsToGo){
         this.name = name;
         this.lapsToGo = lapsToGo;
     }

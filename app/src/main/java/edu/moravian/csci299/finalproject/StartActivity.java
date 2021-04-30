@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
      * The Spinner for the menus
      */
     private Spinner spinner;
-    HashMap<String, Integer> raceLaps = new HashMap<String, Integer>();
+    HashMap<String, Double> raceLaps = new HashMap<String, Double>();
     String [] events;
 
 
@@ -27,9 +27,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         events = getResources().getStringArray(R.array.events_array);
-        raceLaps.put(events[0], 7);
-        raceLaps.put(events[1], 12);
-        raceLaps.put(events[2], 25);
+        raceLaps.put(events[0], 7.5);
+        raceLaps.put(events[1], 12.5);
+        raceLaps.put(events[2], 25.0);
 
 
         // Set up the difficulty spinner
@@ -60,7 +60,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         if (v == findViewById(R.id.playButton)) {
             Intent intent = new Intent(this, RunningActivity.class);
             String event = (spinner.getSelectedItem()).toString();
-            intent.putExtra("laps", Objects.requireNonNull(raceLaps.get(event)).intValue());
+            intent.putExtra("laps", Objects.requireNonNull(raceLaps.get(event)));
             startActivity(intent);
         } else {
             Intent intentHelp = new Intent(this, HelpActivity.class);

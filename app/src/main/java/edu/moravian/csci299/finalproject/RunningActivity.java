@@ -8,14 +8,14 @@ import android.os.Bundle;
 public class RunningActivity extends AppCompatActivity {
     //TODO: should act like the main activity in MoCalendar
 
-    public int laps;
+    public double laps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
 
 
-        laps = getIntent().getIntExtra("laps",0);
+        laps = getIntent().getDoubleExtra("laps",0.0);
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
         if (currentFragment == null) {
