@@ -224,7 +224,11 @@ public class ListFragment extends Fragment {
                     item.lapsToGo--;
                     holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
                 }
+
+                Log.d("Timing", "Projected time: " + projectedTime(60000, item.lapsToGo));
             });
+
+
 
 
         }
@@ -239,29 +243,28 @@ public class ListFragment extends Fragment {
 
     }
 
-//    public String projectedTime(long time){
-////        paceCalculator p = new paceCalculator();
-//        float distance = (float)laps * 400;
-//        float f = time/distance;
-//
-//        // Take Input in Long otherwise
-//        // overflow occur for some inputs.
-//
-////        long milliseconds = (long)(p.event * f);
-//
-//        // formula for conversion for
-//        // milliseconds to minutes.
-//        long minutes = (milliseconds / 1000) / 60;
-//
-//        // formula for conversion for
-//        // milliseconds to seconds
-//        long seconds = (milliseconds / 1000) % 60;
-//
-//        // Print the output
-//        System.out.println(milliseconds + " Milliseconds = "
-//                + minutes + " minutes and "
-//                + seconds + " seconds.");
-//    }
+    public String projectedTime(long time, double lapsToGo){
+//        paceCalculator p = new paceCalculator();
+        float distanceTravelled = (float)(laps - lapsToGo) * 400;//gets distance travelled so far
+
+        Log.d("Timing", ""+ distanceTravelled);
+        double raceDistance = laps * 400;
+        float timeOverDistance = time/distanceTravelled;
+
+
+        long newMilliseconds = (long)(raceDistance * timeOverDistance);
+
+
+        long minutes = (newMilliseconds / 1000) / 60;
+
+        // formula for conversion for
+        // milliseconds to seconds
+        long seconds = (newMilliseconds / 1000) % 60;
+
+
+        return newMilliseconds + " Milliseconds = " + minutes + " minutes and " + seconds + " seconds.";
+    }
+
 
 }
 
