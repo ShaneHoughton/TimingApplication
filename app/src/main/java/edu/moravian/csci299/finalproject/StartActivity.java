@@ -19,15 +19,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
      */
     private Spinner spinner;
     HashMap<String, Integer> raceLaps = new HashMap<String, Integer>();
+    String [] events;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        raceLaps.put("3000", 7);
-        raceLaps.put("5000", 12);
-        raceLaps.put("10000", 25);
+        events = getResources().getStringArray(R.array.events_array);
+        raceLaps.put(events[0], 7);
+        raceLaps.put(events[1], 12);
+        raceLaps.put(events[2], 25);
 
 
         // Set up the difficulty spinner
