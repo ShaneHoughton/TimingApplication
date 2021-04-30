@@ -22,12 +22,13 @@ public class RunningActivity extends AppCompatActivity {
             // If no fragment is displayed in fragment_container, add one with a transaction
             ListFragment listFragment = ListFragment.newInstance();
             listFragment.setLaps(laps);
-            TimerFragment timer = TimerFragment.newInstance();
+            StopWatchFragment stopWatchFragment = StopWatchFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, timer)
+                    .add(R.id.fragment_container, stopWatchFragment)
                     .add(R.id.fragment_container, listFragment)
                     .commit();
+
         }
     }
 }

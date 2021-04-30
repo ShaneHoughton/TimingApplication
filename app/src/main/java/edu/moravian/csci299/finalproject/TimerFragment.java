@@ -94,8 +94,6 @@ public class TimerFragment extends Fragment {
             pausedOffset = 0;
                 }
         );
-
-
         return base;
     }
 }

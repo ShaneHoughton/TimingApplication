@@ -7,6 +7,7 @@
     <string name="helpMessage">Help I am a tiny man trapped in the fake phone please free me </string>
     <string name="back">Back</string>
     <string name="new_runner">New Runner</string>
+    <string name="time_text">%02d : %02d : %02d</string>
 
 
     <string-array name="events_array">
