@@ -21,4 +21,6 @@
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
     <string name="reset">Reset</string>
+    <string name="lapstogo">lapsToGo</string>
+    <string name="_00_00">00:00</string>
 </resources>

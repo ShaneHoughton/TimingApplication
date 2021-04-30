@@ -59,10 +59,6 @@ public class ListFragment extends Fragment{
 
     private double laps;
 
-    long getCurrentMilliseconds;
-//    private long currentTimeInMilliseconds;
-
-
 
     StopWatchFragment stopWatchFragment;
 
@@ -175,10 +171,10 @@ public class ListFragment extends Fragment{
         public Runner runner;
 
         //TextViews and buttons
-        private EditText name;
-        private TextView lapsToGo;
+        private EditText name, number;
+        private TextView lapsToGo, projectedTime;
         private Button lap;
-        private EditText number;
+
 
         /**
          * Sets all fields to their respective views.
@@ -191,6 +187,7 @@ public class ListFragment extends Fragment{
             lapsToGo = runnerView.findViewById(R.id.lapsToGo);
             lap = runnerView.findViewById(R.id.lap);
             number = runnerView.findViewById(R.id.number);
+            projectedTime = runnerView.findViewById(R.id.projectedTime);
         }
     }
 
@@ -239,8 +236,8 @@ public class ListFragment extends Fragment{
                 }
 
                 Log.d("Timing", "Projected time: " + projectedTime(item.lapsToGo));
+                holder.projectedTime.setText(projectedTime(item.lapsToGo));
             });
-
 
 
 
@@ -254,6 +251,26 @@ public class ListFragment extends Fragment{
             return runnerList.runners.size();
         }
 
+    }
+
+
+    /**
+     * Set the callbacks to the context.
+     * @param context context of this fragment.
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        callbacks = (Callbacks) context;
+    }
+
+    /**
+     * Sets callbacks to null.
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callbacks = null;
     }
 
     public String projectedTime(double lapsToGo){ //TODO: Get callbacks to not be null!!!
@@ -272,15 +289,14 @@ public class ListFragment extends Fragment{
 
         long newMilliseconds = (long)(raceDistance * timeOverDistance);
 
-
         long minutes = (newMilliseconds / 1000) / 60;
 
-        // formula for conversion for
-        // milliseconds to seconds
         long seconds = (newMilliseconds / 1000) % 60;
 
 
-        return newMilliseconds + " Milliseconds = " + minutes + " minutes and " + seconds + " seconds.";
+        return minutes + ":" + seconds;
+//        return newMilliseconds + " Milliseconds = " + minutes + ":" + seconds + " seconds.";
+
     }
 
 

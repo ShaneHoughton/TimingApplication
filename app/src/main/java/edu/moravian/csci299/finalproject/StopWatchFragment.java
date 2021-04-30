@@ -191,7 +191,6 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    @Override
     public long getTime() {
         return timeMilliSeconds;
     }

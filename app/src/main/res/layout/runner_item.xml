@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:importantForAutofill="no" />
 
     <Space
         android:layout_width="wrap_content"
@@ -26,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="name" />
+        android:text="name"
+        android:importantForAutofill="no" />
 
     <Space
         android:layout_width="wrap_content"
@@ -38,7 +40,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="lapsToGo" />
+        android:text="@string/lapstogo" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/projectedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/_00_00"
+        android:textAlignment="center" />
 
     <Space
         android:layout_width="wrap_content"
