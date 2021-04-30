@@ -25,7 +25,7 @@ import java.util.concurrent.Executor;
  * from the thread such as the start time, the updated time, and the buffering time between pause and its restart, and ints
  * for minutes, seconds, and milliseconds for updating the UI stopwatch textview.
  */
-public class StopWatchFragment extends Fragment implements View.OnClickListener {
+public class StopWatchFragment extends Fragment implements View.OnClickListener, ListFragment.Callbacks{
 
     private TextView timeTextView;
     private ImageButton startButton, lapButton, pauseButton, resetButton;
@@ -34,7 +34,12 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener 
     private boolean isResumed;
     private long timeMilliSeconds, timeStart, timeBuff, timeUpdate = 0L;
     private int seconds, minutes, milliSeconds;
+    private static StopWatchFragment stopWatchFragment;
+
+
     //public Runnable runnable;
+
+
 
     /**
      * Required empty public constructor
@@ -42,6 +47,7 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener 
     public StopWatchFragment() {
 
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -51,8 +57,12 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener 
      */
     // TODO: Rename and change types and number of parameters
     public static StopWatchFragment newInstance() {
-        StopWatchFragment fragment = new StopWatchFragment();
-        return fragment;
+        if(stopWatchFragment == null){
+            return new StopWatchFragment();
+        }
+        else{
+            return stopWatchFragment;
+        }
     }
 
     @Override
@@ -105,7 +115,9 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener 
             //chronometer.setText(time);
             timeTextView.setText(time);
             //wait 10 milliseconds before running runnable again
+
             handler.postDelayed(this, 10);
+
         }
     };
 
@@ -177,5 +189,10 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener 
                 //chronometer.setText(time);
             }
         }
+    }
+
+    @Override
+    public long getTime() {
+        return timeMilliSeconds;
     }
 }

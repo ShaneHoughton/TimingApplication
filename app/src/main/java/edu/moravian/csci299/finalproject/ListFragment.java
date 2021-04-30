@@ -47,17 +47,29 @@ import java.util.List;
  * NOTE: Finish CalendarFragment first then work on this one. Also, look at how a few things
  * related to dates are dealt with in the CalendarFragment and use similar ideas here.
  */
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment{
 
     // fragment initialization parameters
     private static final String ARG_DATE = "date";
 
     // data
     private RecyclerView list;
-    //private Callbacks callbacks;
+    private Callbacks callbacks;
     private RunnerList runnerList ;
 
     private double laps;
+
+    long getCurrentMilliseconds;
+//    private long currentTimeInMilliseconds;
+
+
+
+    StopWatchFragment stopWatchFragment;
+
+    public interface Callbacks{
+        long getTime();
+    }
+
 
     /**
      * Use this factory method to create a new instance of this fragment that
@@ -99,6 +111,7 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         runnerList = new ViewModelProvider(this).get(RunnerList.class);
+        stopWatchFragment = StopWatchFragment.newInstance();
 
 
         setHasOptionsMenu(true);
@@ -225,7 +238,7 @@ public class ListFragment extends Fragment {
                     holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
                 }
 
-                Log.d("Timing", "Projected time: " + projectedTime(60000, item.lapsToGo));
+                Log.d("Timing", "Projected time: " + projectedTime(item.lapsToGo));
             });
 
 
@@ -243,13 +256,18 @@ public class ListFragment extends Fragment {
 
     }
 
-    public String projectedTime(long time, double lapsToGo){
-//        paceCalculator p = new paceCalculator();
+    public String projectedTime(double lapsToGo){ //TODO: Get callbacks to not be null!!!
+
+        long currentTimeInMilliseconds = callbacks.getTime();
+
+
+        Log.d("Timing", "currentTime: " + currentTimeInMilliseconds);
+
         float distanceTravelled = (float)(laps - lapsToGo) * 400;//gets distance travelled so far
 
         Log.d("Timing", ""+ distanceTravelled);
         double raceDistance = laps * 400;
-        float timeOverDistance = time/distanceTravelled;
+        float timeOverDistance = currentTimeInMilliseconds/distanceTravelled;
 
 
         long newMilliseconds = (long)(raceDistance * timeOverDistance);

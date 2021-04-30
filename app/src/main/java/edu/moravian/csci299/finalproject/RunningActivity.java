@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 
-public class RunningActivity extends AppCompatActivity {
+public class RunningActivity extends AppCompatActivity{
     //TODO: should act like the main activity in MoCalendar
 
     public double laps;
@@ -31,4 +32,5 @@ public class RunningActivity extends AppCompatActivity {
 
         }
     }
+
 }
