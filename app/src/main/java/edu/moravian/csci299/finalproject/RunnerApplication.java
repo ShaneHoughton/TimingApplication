@@ -8,5 +8,6 @@ public class RunnerApplication extends Application {
         super.onCreate();
         // Initialize the repository with this application as the context
         RunnerRepository.initialize(this);
+        RunnerRepository.get().clearDatabase();
     }
 }
