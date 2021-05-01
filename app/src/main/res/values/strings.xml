@@ -2,7 +2,7 @@
     <string name="app_name">Lap Counter</string>
     <string name="select_a_distance">Select a Distance:</string>
     <string name="next">Next</string>
-    <string name="App">App</string>
+    <string name="App">Lap Timer</string>
     <string name="help">Help</string>
     <string name="helpLine1">Pick an event from the list to set the number of laps for the race.</string>
     <string name="helpLine2">Hit + in the menu bar to add a runner, and click on their number and name to edit.</string>
@@ -12,6 +12,12 @@
     <string name="back">Back</string>
     <string name="new_runner">New Runner</string>
     <string name="time_text" translatable="false">%02d : %02d : %02d</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="reset">Reset</string>
+    <string name="lapstogo">lapsToGo</string>
+    <string name="_00_00" translatable="false">00:00</string>
 
 
     <string-array name="events_array">
@@ -19,10 +25,5 @@
         <item>5000</item>
         <item>10000</item>
     </string-array>
-    <string name="start">Start</string>
-    <string name="pause">Pause</string>
-    <string name="stop">Stop</string>
-    <string name="reset">Reset</string>
-    <string name="lapstogo">lapsToGo</string>
-    <string name="_00_00" translatable="false">00:00</string>
+
 </resources>

@@ -1,5 +1,8 @@
 package edu.moravian.csci299.finalproject;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -31,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -182,6 +186,10 @@ public class ListFragment extends Fragment{
         private EditText name, number;
         private TextView lapsToGo, projectedTime;
         private Button lap;
+        private LinearLayout linearLayout;
+
+        private int blue;
+        private int green;
 
 
         /**
@@ -196,6 +204,22 @@ public class ListFragment extends Fragment{
             lap = runnerView.findViewById(R.id.lap);
             number = runnerView.findViewById(R.id.number);
             projectedTime = runnerView.findViewById(R.id.projectedTime);
+            linearLayout = runnerView.findViewById(R.id.linearLayout);
+
+            green = ContextCompat.getColor(getContext(), R.color.green);
+            blue = ContextCompat.getColor(getContext(), R.color.blue);
+        }
+
+
+        private void startAnimation() {
+
+            ObjectAnimator sunsetSkyAnimator = ObjectAnimator
+                    .ofInt(linearLayout, "backgroundColor", blue, green)
+                    .setDuration(250);
+            sunsetSkyAnimator.setEvaluator(new ArgbEvaluator());
+
+
+            sunsetSkyAnimator.start();
         }
     }
 
@@ -332,6 +356,11 @@ public class ListFragment extends Fragment{
                 else if (item.lapsToGo > 0) {
                     item.lapsToGo--;
                     holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
+                }
+
+                if(item.lapsToGo <= 0) {
+                    holder.startAnimation();
+//                    holder.itemView.setBackgroundColor(getResources().getColor(R.color.green));
                 }
 
                 Log.d("Timing", "Projected time: " + projectedTime(item.lapsToGo));
