@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lap Counter</string>
+    <string name="select_a_distance">Seleccionar una Distancia</string>
+    <string name="next">Proximo</string>
+    <string name="App">Applicación</string>
+    <string name="help">Ayuda</string>
+    <string name="helpLine1">Elija un evento de la lista para establecer el número de vueltas de la carrera.</string>
+    <string name="helpLine2">Presione + en la barra de menú para agregar un corredor y haga clic en su número y nombre para editar.</string>
+    <string name="helpLine3">Cuando empiece la carrera, ¡pon el cronómetro!</string>
+    <string name="helpLine4">Cada vez que un corredor termina una vuelta, presione el botón de vuelta y el contador disminuirá y mostrará su ritmo proyectado.</string>
+    <string name="helpLine5">¡Ahora ve a contar vueltas como un profesional!</string>
+    <string name="back">Atrás</string>
+    <string name="new_runner">Nuevo corredor</string>
+    <string name="start">Comienzo</string>
+    <string name="pause">Pausa</string>
+    <string name="stop">Parar</string>
+    <string name="reset">Reiniciar</string>
+    <string name="lapstogo">Vueltas sobrantes</string>
+</resources>

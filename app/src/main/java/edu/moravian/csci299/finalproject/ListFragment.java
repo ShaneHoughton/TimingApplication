@@ -3,10 +3,12 @@ package edu.moravian.csci299.finalproject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import androidx.annotation.NonNull;
@@ -55,12 +57,15 @@ public class ListFragment extends Fragment{
     // data
     private RecyclerView list;
     private Callbacks callbacks;
-    private RunnerList runnerList ;
+    private List<Runner> runners = Collections.emptyList();
+
 
     private double laps;
 
 
     StopWatchFragment stopWatchFragment;
+
+    private LiveData<List<Runner>> liveDataItems;
 
     public interface Callbacks{
         long getTime();
@@ -106,9 +111,13 @@ public class ListFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        runnerList = new ViewModelProvider(this).get(RunnerList.class);
         stopWatchFragment = StopWatchFragment.newInstance();
 
+        liveDataItems = RunnerRepository.get().getAllRunners();
+        liveDataItems.observe(this, (items) -> {
+            this.runners = items;
+            list.setAdapter(new EventListAdapter());
+        });
 
         setHasOptionsMenu(true);
     }
@@ -128,6 +137,9 @@ public class ListFragment extends Fragment{
         list = base.findViewById(R.id.list_view);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.setAdapter(eventListAdapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(eventListAdapter));
+        itemTouchHelper.attachToRecyclerView(list);
 
         // return the base view
         return base;
@@ -150,14 +162,10 @@ public class ListFragment extends Fragment{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_runner) {
-            Log.d("event", "onOptionsItemSelected: ");
-
-            //Make new runner
-            runnerList.runners.add(new Runner("Name",0 , laps));
+            Runner runner = new Runner();
+            runner.lapsToGo = laps;
+            RunnerRepository.get().addRunner(runner);
             list.getAdapter().notifyDataSetChanged();
-
-
-            Log.d("event", "New Runner");
 
             return true;
         }
@@ -191,6 +199,96 @@ public class ListFragment extends Fragment{
         }
     }
 
+    private class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+        private EventListAdapter listAdapter;
+        private Drawable icon;
+        private final ColorDrawable background;
+
+        /**
+         * Create the background for the list adapter
+         *
+         * @param adapter listAdapter
+         */
+        public SwipeToDeleteCallback(EventListAdapter adapter) {
+            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            listAdapter = adapter;
+            icon = ContextCompat.getDrawable(getContext(), R.drawable.delete);
+            background = new ColorDrawable(Color.RED);
+        }
+
+        /**
+         * When the item is moved this method is called
+         *
+         * @param recyclerView recyclerView
+         * @param viewHolder   ViewHolder
+         * @param target       target
+         * @return false
+         */
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        /**
+         * when the item in the viewHolder is swiped, the item is deleted
+         *
+         * @param viewHolder the viewHolder being swiped
+         * @param direction  the direction of the swipe
+         */
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            listAdapter.deleteItem(position);
+        }
+
+        /**
+         * The meat of swipe to delete. This code handles swiping, placing the background behind the list items,
+         * setting the bounds of the icon, and swiping left or right
+         *
+         * @param c                 The canvas which RecyclerView is drawing its children
+         * @param recyclerView      The RecyclerView to which ItemTouchHelper is attached to
+         * @param viewHolder        The ViewHolder which is being interacted by the User or it was interacted and
+         *                          simply animating to its original position
+         * @param dX                The amount of horizontal displacement caused by user's action
+         * @param dY                The amount of vertical displacement caused by user's action
+         * @param actionState       The type of interaction on the View. Is either ACTION_STATE_DRAG or ACTION_STATE_SWIPE
+         * @param isCurrentlyActive True if this view is currently being controlled by the user or false it is simply
+         *                          animating back to its original state.
+         */
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+            View itemView = viewHolder.itemView;
+            int backgroundCornerOffset = 20; //so background is behind the rounded corners of itemView
+
+            int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+            int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+            int iconBottom = iconTop + icon.getIntrinsicHeight();
+
+            if (dX > 0) { // Swiping to the right
+                int iconLeft = itemView.getLeft() + iconMargin + icon.getIntrinsicWidth();
+                int iconRight = itemView.getLeft() + iconMargin;
+                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                background.setBounds(itemView.getLeft(), itemView.getTop(),
+                        itemView.getLeft() + ((int) dX) + backgroundCornerOffset, itemView.getBottom());
+            } else if (dX < 0) { // Swiping to the left
+                int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
+                int iconRight = itemView.getRight() - iconMargin;
+                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                        itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            } else { // view is unSwiped
+                background.setBounds(0, 0, 0, 0);
+            }
+
+            background.draw(c);
+            icon.draw(c);
+        }
+    }
+
     /**
      * The adapter for the items list to be displayed in a RecyclerView.
      */
@@ -219,7 +317,8 @@ public class ListFragment extends Fragment{
          */
         @Override
         public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-            Runner item = runnerList.runners.get(position);
+            Runner item = runners.get(position);
+            holder.runner = item;
             holder.name.setText(item.name);
             holder.lapsToGo.setText(Double.toString(item.lapsToGo));
             holder.number.setText(Integer.toString(item.number));
@@ -239,8 +338,41 @@ public class ListFragment extends Fragment{
                 holder.projectedTime.setText(projectedTime(item.lapsToGo));
             });
 
+            holder.name.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    item.name = s.toString();
+                }
+            });
+
+            holder.number.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(!s.toString().equals("")) {
+                        item.number = Integer.parseInt(s.toString());
+                        RunnerRepository.get().updateRunner(item);
+                    }
+                }
+            });
 
 
+//            RunnerRepository.get().updateRunner(item);
         }
 
         /**
@@ -248,7 +380,12 @@ public class ListFragment extends Fragment{
          */
         @Override
         public int getItemCount() {
-            return runnerList.runners.size();
+            return ListFragment.this.runners.size();
+        }
+
+        public void deleteItem(int position) {
+            RunnerRepository.get().removeRunner(ListFragment.this.runners.get(position));
+            notifyItemRemoved(position);
         }
 
     }
@@ -273,7 +410,7 @@ public class ListFragment extends Fragment{
         callbacks = null;
     }
 
-    public String projectedTime(double lapsToGo){ //TODO: Get callbacks to not be null!!!
+    public String projectedTime(double lapsToGo){
 
         long currentTimeInMilliseconds = callbacks.getTime();
 

@@ -28,8 +28,7 @@ import java.util.concurrent.Executor;
 public class StopWatchFragment extends Fragment implements View.OnClickListener, ListFragment.Callbacks{
 
     private TextView timeTextView;
-    private ImageButton startButton, lapButton, pauseButton, resetButton;
-    private TextView lapCount;
+    private ImageButton startButton, pauseButton, resetButton;
     private Handler handler;
     private boolean isResumed;
     private long timeMilliSeconds, timeStart, timeBuff, timeUpdate = 0L;
@@ -138,8 +137,6 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         timeTextView = base.findViewById(R.id.timeTextView);
         startButton = base.findViewById(R.id.startButton);
         startButton.setOnClickListener(this);
-        lapButton = base.findViewById(R.id.lapButton);
-        lapButton.setOnClickListener(this);
         pauseButton = base.findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(this);
         resetButton = base.findViewById(R.id.resetButton);
@@ -164,9 +161,6 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
                 //chronometer.start();
                 isResumed = true;
             }
-        }
-        else if (lapButton.getId() == v.getId()){
-
         }
         else if (pauseButton.getId() == v.getId()){
             if (isResumed)

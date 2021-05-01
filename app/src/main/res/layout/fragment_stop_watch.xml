@@ -12,13 +12,8 @@
         android:id="@+id/timeTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/audiowide" />
-
-    <TextView
-        android:id="@+id/lapCount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/audiowide" />
+        android:fontFamily="@font/audiowide"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,20 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/start"
             android:src="@drawable/start_button" />
-
-        <ImageButton
-            android:id="@+id/lapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/lap_button" />
 
         <ImageButton
             android:id="@+id/pauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/pause"
             android:src="@drawable/pause_button" />
 
         <ImageButton
@@ -51,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/reset"
             android:src="@drawable/stop_button" />
     </LinearLayout>
 
