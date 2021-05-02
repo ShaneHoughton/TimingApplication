@@ -17,4 +17,5 @@
     <string name="stop">Parar</string>
     <string name="reset">Reiniciar</string>
     <string name="lapstogo">Vueltas sobrantes</string>
+    <string name="clicktosetdistance">Haga clic para establecer la distancia</string>
 </resources>

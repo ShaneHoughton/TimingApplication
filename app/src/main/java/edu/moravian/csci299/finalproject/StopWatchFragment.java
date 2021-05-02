@@ -1,5 +1,6 @@
 package edu.moravian.csci299.finalproject;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -7,6 +8,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -39,6 +41,17 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     private long timeMilliSeconds, timeStart, timeBuff, timeUpdate = 0L;
     private int seconds, minutes, milliSeconds;
     private static StopWatchFragment stopWatchFragment;
+    private boolean isFirstValue;
+    private long timestampOfLastChange = 0;
+    private SensorManager sensorManager;
+    private Sensor sensor;
+    private String eventRecordKey;
+    private TextView eventRecordText;
+    private Callbacks callback;
+
+    public interface Callbacks{
+        long getRecord();
+    }
 
 
 
@@ -76,6 +89,26 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         handler = new Handler();
         //stopwatch is created stopped or paused
         isResumed = false;
+
+    }
+
+    /**
+     * Set the callbacks to the context.
+     * @param context context of this fragment.
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        callback = (StopWatchFragment.Callbacks) context;
+    }
+
+    /**
+     * Sets callbacks to null.
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callback = null;
     }
 
     /**
@@ -146,6 +179,8 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         pauseButton.setOnClickListener(this);
         resetButton = base.findViewById(R.id.resetButton);
         resetButton.setOnClickListener(this);
+        eventRecordText = base.findViewById(R.id.stopWatchRecord);
+        eventRecordText.setText(getString(R.string.time_text, TimeUtils.getMinutes(callback.getRecord()), TimeUtils.getSeconds(callback.getRecord()), TimeUtils.getMilliSeconds(callback.getRecord())));
         return base;
     }
 
@@ -210,6 +245,8 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     public boolean getIsResumed(){
         return isResumed;
     }
+
+
 
 
 }

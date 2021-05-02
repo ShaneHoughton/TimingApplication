@@ -3,6 +3,7 @@ package edu.moravian.csci299.finalproject;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -54,6 +55,11 @@ public class ListFragment extends Fragment{
     private RecyclerView list;
     private Callbacks callbacks;
     private List<Runner> runners = Collections.emptyList();
+    private SharedPreferences preferences;
+    private long eventRecord;
+    private boolean firstFinished;
+    private String eventKey;
+
 
 
     private double laps;
@@ -65,6 +71,10 @@ public class ListFragment extends Fragment{
 
     public interface Callbacks{
         long getTime();
+    }
+
+    public void setPreferences(SharedPreferences preference){
+        this.preferences = preference;
     }
 
 
@@ -116,6 +126,14 @@ public class ListFragment extends Fragment{
         });
 
         setHasOptionsMenu(true);
+        firstFinished = true;
+    }
+
+    public void setEventRecord(long record){
+        eventRecord = record;
+    }
+    public void setEventKey(String key){
+        eventKey = key;
     }
 
     /**
@@ -201,6 +219,7 @@ public class ListFragment extends Fragment{
             green = ContextCompat.getColor(getContext(), R.color.green);
             blue = ContextCompat.getColor(getContext(), R.color.blue);
         }
+
 
 
         private void startAnimation() {
@@ -353,8 +372,16 @@ public class ListFragment extends Fragment{
                 if(item.lapsToGo <= 0) {
                     holder.startAnimation();
 //                    holder.itemView.setBackgroundColor(getResources().getColor(R.color.green));
+                    if (firstFinished){
+                        long finishTimeInMilliseconds = callbacks.getTime();
+                        if(eventRecord == 0)
+                            preferences.edit().putLong(eventKey, finishTimeInMilliseconds).apply();
+                        else if (finishTimeInMilliseconds < eventRecord){
+                            preferences.edit().putLong(eventKey, finishTimeInMilliseconds).apply();
+                        }
+                        firstFinished = false;
+                    }
                 }
-
                 Log.d("Timing", "Projected time: " + projectedTime(item.lapsToGo));
                 holder.projectedTime.setText(projectedTime(item.lapsToGo));
             });
@@ -457,6 +484,7 @@ public class ListFragment extends Fragment{
         return minutes + ":" + seconds;
 
     }
+
 
 
 }

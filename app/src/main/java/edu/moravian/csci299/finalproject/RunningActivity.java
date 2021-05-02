@@ -3,6 +3,9 @@ package edu.moravian.csci299.finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,10 +14,13 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 
-public class RunningActivity extends AppCompatActivity implements ListFragment.Callbacks, SensorEventListener {
+public class RunningActivity extends AppCompatActivity implements ListFragment.Callbacks, SensorEventListener, StopWatchFragment.Callbacks {
     //TODO: should act like the main activity in MoCalendar
     StopWatchFragment stopWatchFragment;
     public double laps;
+    private SharedPreferences preferences;
+    private long eventRecord;
+    private String eventKey;
 
     //for sensor
     private final static float SHAKE_THRESHOLD = 3f; // in m/s^2
@@ -33,18 +39,25 @@ public class RunningActivity extends AppCompatActivity implements ListFragment.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
+        preferences = this.getSharedPreferences("edu.moravian.csci299.finalproject", Context.MODE_PRIVATE);
 
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        Intent intent = getIntent();
+        laps = intent.getDoubleExtra("laps",0.0);
+        eventRecord = intent.getLongExtra("eventRecord", 0L);
+        eventKey = intent.getStringExtra("eventKey");
 
-        laps = getIntent().getDoubleExtra("laps",0.0);
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
         if (currentFragment == null) {
             // If no fragment is displayed in fragment_container, add one with a transaction
             ListFragment listFragment = ListFragment.newInstance();
             listFragment.setLaps(laps);
+            listFragment.setEventRecord(eventRecord);
+            listFragment.setEventKey(eventKey);
+            listFragment.setPreferences(this.preferences);
             stopWatchFragment = StopWatchFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
@@ -108,5 +121,10 @@ public class RunningActivity extends AppCompatActivity implements ListFragment.C
         lastYAcceleration = yAcceleration;
         lastZAcceleration = zAcceleration;
         isFirstValue = false;
+    }
+
+    @Override
+    public long getRecord() {
+        return eventRecord;
     }
 }

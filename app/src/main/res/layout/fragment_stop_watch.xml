@@ -45,4 +45,10 @@
             android:src="@drawable/stop_button" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/stopWatchRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
 </LinearLayout>
