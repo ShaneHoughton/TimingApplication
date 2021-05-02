@@ -459,9 +459,10 @@ public class ListFragment extends Fragment{
 
         long seconds = (newMilliseconds / 1000) % 60;
 
+        if(seconds < 10)
+            return minutes + ":0" + seconds;
 
         return minutes + ":" + seconds;
-//        return newMilliseconds + " Milliseconds = " + minutes + ":" + seconds + " seconds.";
 
     }
 

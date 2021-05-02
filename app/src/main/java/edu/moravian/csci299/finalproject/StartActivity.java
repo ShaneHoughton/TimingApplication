@@ -27,9 +27,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         events = getResources().getStringArray(R.array.events_array);
-        raceLaps.put(events[0], 7.5);
-        raceLaps.put(events[1], 12.5);
-        raceLaps.put(events[2], 25.0);
+        raceLaps.put(events[0], 2.0);
+        raceLaps.put(events[1], 4.0);
+        raceLaps.put(events[2], 7.5);
+        raceLaps.put(events[3], 12.5);
+        raceLaps.put(events[4], 25.0);
 
 
         // Set up the difficulty spinner
