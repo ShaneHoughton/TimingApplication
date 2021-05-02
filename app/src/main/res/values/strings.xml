@@ -14,7 +14,6 @@
     <string name="time_text" translatable="false">%02d : %02d : %02d</string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
-    <string name="stop">Stop</string>
     <string name="reset">Reset</string>
     <string name="lapstogo">lapsToGo</string>
     <string name="_00_00" translatable="false">00:00</string>
