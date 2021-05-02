@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "edu.moravian.csci299.finalproject"
+        applicationId "edu.moravian.csci299.lapCounter"
         minSdkVersion 22
         targetSdkVersion 30
         versionCode 1

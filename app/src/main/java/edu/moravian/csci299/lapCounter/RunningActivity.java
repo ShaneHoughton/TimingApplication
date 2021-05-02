@@ -1,4 +1,4 @@
-package edu.moravian.csci299.finalproject;
+package edu.moravian.csci299.lapCounter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,7 +11,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 
 public class RunningActivity extends AppCompatActivity implements ListFragment.Callbacks, SensorEventListener, StopWatchFragment.Callbacks {
@@ -37,7 +36,7 @@ public class RunningActivity extends AppCompatActivity implements ListFragment.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
-        preferences = this.getSharedPreferences("edu.moravian.csci299.finalproject", Context.MODE_PRIVATE);
+        preferences = this.getSharedPreferences("edu.moravian.csci299.lapCounter", Context.MODE_PRIVATE);
 
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.moravian.csci299.finalproject">
+    package="edu.moravian.csci299.lapCounter">
 
     <application
-        android:name=".RunnerApplication"
+        android:name="edu.moravian.csci299.lapCounter.RunnerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FinalProject">
-        <activity android:name=".HelpActivity" />
-        <activity android:name=".RunningActivity" />
-        <activity android:name=".StartActivity">
+        android:theme="@style/Theme.LapCounter">
+        <activity android:name="edu.moravian.csci299.lapCounter.HelpActivity" />
+        <activity android:name="edu.moravian.csci299.lapCounter.RunningActivity" />
+        <activity android:name="edu.moravian.csci299.lapCounter.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

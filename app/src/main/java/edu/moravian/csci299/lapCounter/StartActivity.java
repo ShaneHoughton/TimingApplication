@@ -1,4 +1,4 @@
-package edu.moravian.csci299.finalproject;
+package edu.moravian.csci299.lapCounter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +36,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_start);
         events = getResources().getStringArray(R.array.events_array);
         eventRecordText = findViewById(R.id.eventRecord);
-        this.preferences = this.getSharedPreferences("edu.moravian.csci299.finalproject", Context.MODE_PRIVATE);
+        this.preferences = this.getSharedPreferences("edu.moravian.csci299.lapCounter", Context.MODE_PRIVATE);
 
 //        To Clear the shared preferences
 //        SharedPreferences.Editor preferencesEditor = preferences.edit();
