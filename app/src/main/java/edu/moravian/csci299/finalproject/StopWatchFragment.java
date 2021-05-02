@@ -1,5 +1,10 @@
 package edu.moravian.csci299.finalproject;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -36,8 +41,6 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     private static StopWatchFragment stopWatchFragment;
 
 
-    //public Runnable runnable;
-
 
 
     /**
@@ -46,6 +49,8 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     public StopWatchFragment() {
 
     }
+
+
 
 
     /**
@@ -155,37 +160,56 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         if (startButton.getId() == v.getId()){
-            if (!isResumed){
-                timeStart = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable, 0);
-                //chronometer.start();
-                isResumed = true;
-            }
+            start();
         }
         else if (pauseButton.getId() == v.getId()){
-            if (isResumed)
-                timeBuff += timeMilliSeconds;
-            handler.removeCallbacks(runnable);
-            //chronometer.stop();
-            isResumed = false;
+            pause();
         }
         else if (resetButton.getId() == v.getId()){
-            if(!isResumed){
-                timeMilliSeconds = 0L;
-                timeStart = 0L;
-                timeBuff = 0L;
-                timeUpdate = 0L;
-                minutes = 0;
-                seconds = 0;
-                milliSeconds = 0;
-                String time = getString(R.string.time_text, minutes, seconds, milliSeconds);
-                timeTextView.setText(time);
-                //chronometer.setText(time);
+            stop();
             }
+    }
+
+    public void start(){
+        if (!isResumed){
+            timeStart = SystemClock.uptimeMillis();
+            handler.postDelayed(runnable, 0);
+            //chronometer.start();
+            isResumed = true;
+        }
+    }
+
+    public void pause(){
+        if (isResumed)
+            timeBuff += timeMilliSeconds;
+        handler.removeCallbacks(runnable);
+        //chronometer.stop();
+        isResumed = false;
+    }
+
+    public void stop(){
+        if(!isResumed){
+            timeMilliSeconds = 0L;
+            timeStart = 0L;
+            timeBuff = 0L;
+            timeUpdate = 0L;
+            minutes = 0;
+            seconds = 0;
+            milliSeconds = 0;
+            String time = getString(R.string.time_text, minutes, seconds, milliSeconds);
+            timeTextView.setText(time);
+            //chronometer.setText(time);
         }
     }
 
     public long getTime() {
         return timeMilliSeconds;
     }
+
+
+    public boolean getIsResumed(){
+        return isResumed;
+    }
+
+
 }
