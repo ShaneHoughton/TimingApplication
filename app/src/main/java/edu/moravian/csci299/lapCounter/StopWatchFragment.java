@@ -1,5 +1,6 @@
 package edu.moravian.csci299.lapCounter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -32,13 +33,13 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     private boolean isResumed;
     private long timeMilliSeconds, timeStart, timeBuff, timeUpdate = 0L;
     private int seconds, minutes, milliSeconds;
+    @SuppressLint("StaticFieldLeak")
     private static StopWatchFragment stopWatchFragment;
     private boolean isFirstValue;
-    private long timestampOfLastChange = 0;
+    private final long timestampOfLastChange = 0;
     private SensorManager sensorManager;
     private Sensor sensor;
     private String eventRecordKey;
-    private TextView eventRecordText;
     private Callbacks callback;
 
     public interface Callbacks{
@@ -174,7 +175,7 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         pauseButton.setOnClickListener(this);
         resetButton = base.findViewById(R.id.resetButton);
         resetButton.setOnClickListener(this);
-        eventRecordText = base.findViewById(R.id.stopWatchRecord);
+        TextView eventRecordText = base.findViewById(R.id.stopWatchRecord);
         eventRecordText.setText(getString(R.string.time_text, TimeUtils.getMinutes(callback.getRecord()), TimeUtils.getSeconds(callback.getRecord()), TimeUtils.getMilliSeconds(callback.getRecord())));
         return base;
     }
