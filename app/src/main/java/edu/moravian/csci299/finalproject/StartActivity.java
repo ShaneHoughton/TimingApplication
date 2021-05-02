@@ -1,25 +1,26 @@
 package edu.moravian.csci299.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 
-public class StartActivity extends AppCompatActivity implements View.OnClickListener {
+public class StartActivity extends AppCompatActivity implements View.OnClickListener, EventPickerDialog.Callbacks {
 
     /**
      * The Spinner for the menus
      */
-    private Spinner spinner;
-    HashMap<String, Double> raceLaps = new HashMap<String, Double>();
     String [] events;
+    double laps = 0;
+    TextView distance;
 
 
     @Override
@@ -27,23 +28,18 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         events = getResources().getStringArray(R.array.events_array);
-        raceLaps.put(events[0], 7.5);
-        raceLaps.put(events[1], 12.5);
-        raceLaps.put(events[2], 25.0);
 
 
-        // Set up the difficulty spinner
-        spinner = findViewById(R.id.difficultySpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.events_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+
 
         // Set up the "Play" button
         findViewById(R.id.playButton).setOnClickListener(this);
 
         // Set up the "Two Player" button
         findViewById(R.id.helpButton).setOnClickListener(this);
+
+        distance = findViewById(R.id.distance);
+        distance.setOnClickListener(this);
 
 
     }
@@ -57,10 +53,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
      */
     @Override
     public void onClick(View v) {
-        if (v == findViewById(R.id.playButton)) {
+        if(v == findViewById(R.id.distance)){
+            FragmentManager fm = getSupportFragmentManager();
+            EventPickerDialog dialog = EventPickerDialog.newInstance(Events.M800);
+            dialog.show(fm, "Events");
+        }
+        else if (v == findViewById(R.id.playButton)) {
             Intent intent = new Intent(this, RunningActivity.class);
-            String event = (spinner.getSelectedItem()).toString();
-            intent.putExtra("laps", Objects.requireNonNull(raceLaps.get(event)));
+            intent.putExtra("laps", laps);
             startActivity(intent);
         } else {
             Intent intentHelp = new Intent(this, HelpActivity.class);
@@ -68,4 +68,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    @Override
+    public void onEventSelected(Events event) {
+        laps = event.distance/400.0;
+        distance.setText(String.valueOf(event.distance));
+
+    }
 }

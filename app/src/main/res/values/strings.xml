@@ -18,6 +18,7 @@
     <string name="reset">Reset</string>
     <string name="lapstogo">lapsToGo</string>
     <string name="_00_00" translatable="false">00:00</string>
+    <string name="clicktosetdistance" translatable="false">Click to set Distance</string>
 
 
     <string-array name="events_array">
@@ -25,5 +26,7 @@
         <item>5000</item>
         <item>10000</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
