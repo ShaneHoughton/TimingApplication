@@ -2,6 +2,7 @@ package edu.moravian.csci299.lapCounter;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -192,13 +193,15 @@ public class ListFragment extends Fragment{
         public Runner runner;
 
         //TextViews and buttons
-        private EditText name, number;
-        private TextView lapsToGo, projectedTime;
-        private Button lap;
-        private LinearLayout linearLayout;
+        private final EditText name;
+        private final EditText number;
+        private final TextView lapsToGo;
+        private final TextView projectedTime;
+        private final Button lap;
+        private final LinearLayout linearLayout;
 
-        private int blue;
-        private int green;
+        private final int blue;
+        private final int green;
 
 
         /**
@@ -236,8 +239,8 @@ public class ListFragment extends Fragment{
     }
 
     private class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-        private ListAdapter listAdapter;
-        private Drawable icon;
+        private final ListAdapter listAdapter;
+        private final Drawable icon;
         private final ColorDrawable background;
 
         /**
@@ -351,6 +354,7 @@ public class ListFragment extends Fragment{
          * @param holder   the ItemViewHolder holding the view to be updated
          * @param position the position in the list of the item to display
          */
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Runner item = runners.get(position);

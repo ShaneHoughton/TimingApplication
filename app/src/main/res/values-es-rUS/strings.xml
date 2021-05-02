@@ -14,9 +14,10 @@
     <string name="new_runner">Nuevo corredor</string>
     <string name="start">Comienzo</string>
     <string name="pause">Pausa</string>
-    <string name="stop">Parar</string>
     <string name="reset">Reiniciar</string>
     <string name="lapstogo">Vueltas sobrantes</string>
     <string name="clicktosetdistance">Haga clic para establecer la distancia</string>
     <string name="record_text">Récord del Evento</string>
+    <string name="name">Nombre</string>
+    <string name="lap">Vuelta</string>
 </resources>
