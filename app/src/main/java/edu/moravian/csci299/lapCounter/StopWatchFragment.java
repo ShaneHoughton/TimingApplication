@@ -260,6 +260,4 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
     }
 
 
-
-
 }
