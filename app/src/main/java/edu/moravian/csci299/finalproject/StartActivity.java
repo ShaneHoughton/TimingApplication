@@ -13,9 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener, EventPickerDialog.Callbacks {
 
-    /**
-     * The Spinner for the menus
-     */
+
     String [] events;
     double laps = 0;
     TextView distance;
@@ -26,6 +24,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private TextView recordText;
 
 
+    /**
+     * Called when the activity is created. Instantiate the Views and register listeners
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down
+     *                           then this Bundle contains the data it most recently supplied in onSaveInstanceState.
+     *                           Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +43,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 //        preferencesEditor.clear();
 //        preferencesEditor.commit();
 
-        // Set up the "Play" button
-        findViewById(R.id.playButton).setOnClickListener(this);
+        // Set up the "Next" button
+        findViewById(R.id.nextButton).setOnClickListener(this);
 
-        // Set up the "Two Player" button
+        // Set up the "Help" button
         findViewById(R.id.helpButton).setOnClickListener(this);
 
 
@@ -58,9 +62,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     * When the "Play!" button is pressed we proceed to the main game Activity
+     * When the "Next" button is pressed we proceed to the main Running Activity
      *
-     * When the secret "Two Player" button is pressed we proceed to the game two player activity
+     * When the "Help" button is pressed we proceed to the help activity
      *
      * @param v the view that was clicked (i.e. the "Play" button)
      */
@@ -71,7 +75,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             EventPickerDialog dialog = EventPickerDialog.newInstance(Events.M800);
             dialog.show(fm, "Events");
         }
-        else if (v == findViewById(R.id.playButton)) {
+        else if (v == findViewById(R.id.nextButton)) {
             Intent intent = new Intent(this, RunningActivity.class);
             intent.putExtra("laps", laps);
             intent.putExtra("eventKey", eventKey);
@@ -87,6 +91,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         return String.format(raw, min, sec, milliSec);
     }
 
+    /**
+     *  called when something is selected in the dialog picker
+     * @param event the event selected in the dialog picker
+     */
     @Override
     public void onEventSelected(Events event) {
         laps = event.distance/400.0;
@@ -94,6 +102,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         setHighScoreText();
     }
 
+    /**
+     * Set the text for the high score text based on which event is selected.
+     */
     private void setHighScoreText(){
         if (laps == 2){
             String m800Key = "800_preference";

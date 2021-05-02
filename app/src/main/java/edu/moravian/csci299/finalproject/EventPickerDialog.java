@@ -23,11 +23,17 @@ import android.widget.TextView;
 public class EventPickerDialog extends DialogFragment {
     private static final Events[] EVENTS = Events.values();
 
+    /**
+     * Callbacks for the EventPickerDialog, called when an event is selected
+     */
     public interface Callbacks{
 
         void onEventSelected(Events event);
     }
 
+    /**
+     * Required empty public constructor
+     */
     public EventPickerDialog() {
         // Required empty public constructor
     }
@@ -35,8 +41,11 @@ public class EventPickerDialog extends DialogFragment {
     private static final String ARG_INITIAL_TYPE = "initial_type";
 
 
-
-    // TODO: Rename and change types and number of parameters
+    /**
+     * Creat a new instance of the EventPickerDialog
+     * @param event the event picked
+     * @return the event picker fragment instance
+     */
     public static EventPickerDialog newInstance(Events event) {
         EventPickerDialog fragment = new EventPickerDialog();
         Bundle args = new Bundle();
@@ -45,6 +54,11 @@ public class EventPickerDialog extends DialogFragment {
         return fragment;
     }
 
+    /**
+     * Create the actual alert dialog
+     * @param savedInstanceState A mapping from String keys to various Parcelable values.
+     * @return The dialog created
+     */
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
@@ -55,6 +69,9 @@ public class EventPickerDialog extends DialogFragment {
         return b.create();
     }
 
+    /**
+     * List adapter functions for the EventPicker
+     */
     private class EventTypesListAdapter extends BaseAdapter {
         @Override
         public int getCount() { return EVENTS.length; }

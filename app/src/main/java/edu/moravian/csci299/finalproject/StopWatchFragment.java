@@ -72,7 +72,6 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
      *
      * @return A new instance of StopWatchFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static StopWatchFragment newInstance() {
         if(stopWatchFragment == null){
             return new StopWatchFragment();
@@ -82,6 +81,10 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     *  Called when the StopWatchFragment is created, create a new handler and set resumed to false
+     * @param savedInstanceState if the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +193,7 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
      * we use the handler to start running our runnable object on the thread. If paused button is clicked them we check to see
      * if the stopwatch is currently resumed and if it is we get the buffering milliseconds for updating in the future and
      * removes callbacks for runnable and updates the boolean that stopwatch is no longer resumed.
-     * @param v
+     * @param v the View clicked
      */
     @Override
     public void onClick(View v) {
@@ -205,6 +208,9 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
             }
     }
 
+    /**
+     *  start the stopwatch
+     */
     public void start(){
         if (!isResumed){
             timeStart = SystemClock.uptimeMillis();
@@ -214,6 +220,9 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     * Pause the stopwatch
+     */
     public void pause(){
         if (isResumed)
             timeBuff += timeMilliSeconds;
@@ -222,6 +231,9 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         isResumed = false;
     }
 
+    /**
+     * Stop/reset the stopwatch
+     */
     public void stop(){
         if(!isResumed){
             timeMilliSeconds = 0L;
@@ -237,11 +249,19 @@ public class StopWatchFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     *  Get the time in milliseconds
+     * @return the time in milliseconds
+     */
     public long getTime() {
         return timeMilliSeconds;
     }
 
 
+    /**
+     * return true if the stopwatch is currently running
+     * @return isResumed
+     */
     public boolean getIsResumed(){
         return isResumed;
     }

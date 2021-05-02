@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
+/**
+ * Database Entity Runner. Each runner has a unique id, name, number and amount of laps to go.
+ */
 @Entity
 public class Runner {
     @PrimaryKey

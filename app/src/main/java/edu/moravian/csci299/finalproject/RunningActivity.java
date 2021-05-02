@@ -15,7 +15,6 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class RunningActivity extends AppCompatActivity implements ListFragment.Callbacks, SensorEventListener, StopWatchFragment.Callbacks {
-    //TODO: should act like the main activity in MoCalendar
     StopWatchFragment stopWatchFragment;
     public double laps;
     private SharedPreferences preferences;
@@ -31,7 +30,6 @@ public class RunningActivity extends AppCompatActivity implements ListFragment.C
     private boolean isFirstValue = true;
     private long timestampOfLastChange = 0;
 
-    // TODO: Variables for the sensor
     private SensorManager sensorManager;
     private Sensor sensor;
 

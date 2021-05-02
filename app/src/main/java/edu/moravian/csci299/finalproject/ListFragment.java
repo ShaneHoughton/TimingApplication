@@ -32,19 +32,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
- * A fragment that displays a list of events. The list is a RecyclerView. When an event on the list
- * is clicked, a callback method is called to inform the hosting activity. When an item on the list
- * is swiped, it causes the event to be deleted (see https://medium.com/@zackcosborn/step-by-step-recyclerview-swipe-to-delete-and-undo-7bbae1fce27e).
+ * A fragment that displays a list of Runners. The list is a RecyclerView.
+ * When an item on the list is swiped, it causes the event to be deleted
+ * (see https://medium.com/@zackcosborn/step-by-step-recyclerview-swipe-to-delete-and-undo-7bbae1fce27e).
  * This is the fragment that also controls the menu of options in the app bar.
- * <p>
- * Above the list is a text box that states the date being displayed on the list.
- * <p>
- * NOTE: Finish CalendarFragment first then work on this one. Also, look at how a few things
- * related to dates are dealt with in the CalendarFragment and use similar ideas here.
  */
 public class ListFragment extends Fragment{
 
@@ -73,6 +67,10 @@ public class ListFragment extends Fragment{
         long getTime();
     }
 
+    /**
+     * Set preferences
+     * @param preference the preference to set
+     */
     public void setPreferences(SharedPreferences preference){
         this.preferences = preference;
     }
@@ -84,23 +82,20 @@ public class ListFragment extends Fragment{
      *
      * @return a new instance of fragment ListFragment
      */
-    public static ListFragment newInstance() {
-        return newInstance(new Date());
-    }
+
 
     /**
      * Use this factory method to create a new instance of this fragment that
-     * lists events for the given day.
+     * lists Runners in an event
      *
-     * @param date the date to show the event list for
+     *
      * @return a new instance of fragment ListFragment
      */
-    public static ListFragment newInstance(Date date) {
+    public static ListFragment newInstance() {
 //        date = ListFragment.resetToStartOfDay(date);
 
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_DATE, date);
         fragment.setArguments(args);
         return fragment;
     }
@@ -111,7 +106,7 @@ public class ListFragment extends Fragment{
 
 
     /**
-     * Upon creation need to enable the options menu and update the view for the initial date.
+     * Upon creation need to enable the options menu and get the initial runners
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +117,7 @@ public class ListFragment extends Fragment{
         liveDataItems = RunnerRepository.get().getAllRunners();
         liveDataItems.observe(this, (items) -> {
             this.runners = items;
-            list.setAdapter(new EventListAdapter());
+            list.setAdapter(new ListAdapter());
         });
 
         setHasOptionsMenu(true);
@@ -147,19 +142,23 @@ public class ListFragment extends Fragment{
         View base = inflater.inflate(R.layout.fragment_list, container, false);
 
 
-        EventListAdapter eventListAdapter = new EventListAdapter();
+        ListAdapter listAdapter = new ListAdapter();
         list = base.findViewById(R.id.list_view);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        list.setAdapter(eventListAdapter);
+        list.setAdapter(listAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(eventListAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(listAdapter));
         itemTouchHelper.attachToRecyclerView(list);
 
         // return the base view
         return base;
     }
 
-
+    /**
+     *  Inflate the menu view
+     * @param menu menu object
+     * @param inflater inflater to inflate the menu view
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -168,7 +167,7 @@ public class ListFragment extends Fragment{
 
 
     /**
-     * Creates a new event, adds it to the database, and triggers callbacks with it.
+     * Creates a new Runner, adds it to the database, and triggers callbacks with it.
      *
      * @param item the item selected.
      * @return true if selected, otherwise returns superclasses result.
@@ -189,7 +188,7 @@ public class ListFragment extends Fragment{
 
 
 
-    private class EventViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         public Runner runner;
 
         //TextViews and buttons
@@ -207,7 +206,7 @@ public class ListFragment extends Fragment{
          *
          * @param runnerView
          */
-        public EventViewHolder(@NonNull View runnerView) {
+        public ViewHolder(@NonNull View runnerView) {
             super(runnerView);
             name = runnerView.findViewById(R.id.runnerName);
             lapsToGo = runnerView.findViewById(R.id.lapsToGo);
@@ -221,7 +220,9 @@ public class ListFragment extends Fragment{
         }
 
 
-
+        /**
+         * Start animation to turn a runner's row green signaling they are done
+         */
         private void startAnimation() {
 
             ObjectAnimator sunsetSkyAnimator = ObjectAnimator
@@ -235,7 +236,7 @@ public class ListFragment extends Fragment{
     }
 
     private class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-        private EventListAdapter listAdapter;
+        private ListAdapter listAdapter;
         private Drawable icon;
         private final ColorDrawable background;
 
@@ -244,7 +245,7 @@ public class ListFragment extends Fragment{
          *
          * @param adapter listAdapter
          */
-        public SwipeToDeleteCallback(EventListAdapter adapter) {
+        public SwipeToDeleteCallback(ListAdapter adapter) {
             super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             listAdapter = adapter;
             icon = ContextCompat.getDrawable(getContext(), R.drawable.delete);
@@ -327,7 +328,7 @@ public class ListFragment extends Fragment{
     /**
      * The adapter for the items list to be displayed in a RecyclerView.
      */
-    private class EventListAdapter extends RecyclerView.Adapter<EventViewHolder> {
+    private class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
         /**
          * To create the view holder we inflate the layout we want to use for
          * each item and then return an ItemViewHolder holding the inflated
@@ -335,11 +336,11 @@ public class ListFragment extends Fragment{
          */
         @NonNull
         @Override
-        public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View v = inflater.inflate(R.layout.runner_item, parent, false);
 
-            return new EventViewHolder(v);
+            return new ViewHolder(v);
         }
 
         /**
@@ -351,7 +352,7 @@ public class ListFragment extends Fragment{
          * @param position the position in the list of the item to display
          */
         @Override
-        public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Runner item = runners.get(position);
             holder.runner = item;
             holder.name.setText(item.name);
@@ -418,9 +419,6 @@ public class ListFragment extends Fragment{
                     }
                 }
             });
-
-
-//            RunnerRepository.get().updateRunner(item);
         }
 
         /**
@@ -458,6 +456,11 @@ public class ListFragment extends Fragment{
         callbacks = null;
     }
 
+    /**
+     * calculate the projected time from the current time and laps to go
+     * @param lapsToGo the amount of laps left in the race
+     * @return string of the projected time
+     */
     public String projectedTime(double lapsToGo){
 
         long currentTimeInMilliseconds = callbacks.getTime();

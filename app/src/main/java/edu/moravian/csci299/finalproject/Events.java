@@ -1,5 +1,8 @@
 package edu.moravian.csci299.finalproject;
 
+/**
+ * Options for the EventPickerDialog
+ */
 public enum Events {
     M800(800),
     M1600(1600),
@@ -9,6 +12,10 @@ public enum Events {
 
     public final long distance;
 
+    /**
+     * Events ENUM member constructor
+     * @param distance the distance in meters
+     */
     Events(long distance){
         this.distance = distance;
     }
