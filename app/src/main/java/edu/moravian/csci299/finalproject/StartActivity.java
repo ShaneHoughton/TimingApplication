@@ -23,6 +23,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     long eventRecord;
     private SharedPreferences preferences;
     private String eventKey;
+    private TextView recordText;
 
 
     @Override
@@ -43,6 +44,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         // Set up the "Two Player" button
         findViewById(R.id.helpButton).setOnClickListener(this);
+
 
         distance = findViewById(R.id.distance);
         distance.setOnClickListener(this);

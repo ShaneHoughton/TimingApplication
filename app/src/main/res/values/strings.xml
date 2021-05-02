@@ -19,6 +19,7 @@
     <string name="lapstogo">lapsToGo</string>
     <string name="_00_00" translatable="false">00:00</string>
     <string name="clicktosetdistance">Click to set Distance</string>
+    <string name="record_text">Event Record:</string>
 
 
     <string-array name="events_array">

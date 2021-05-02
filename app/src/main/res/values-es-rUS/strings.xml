@@ -18,4 +18,5 @@
     <string name="reset">Reiniciar</string>
     <string name="lapstogo">Vueltas sobrantes</string>
     <string name="clicktosetdistance">Haga clic para establecer la distancia</string>
+    <string name="record_text">Récord del Evento</string>
 </resources>
