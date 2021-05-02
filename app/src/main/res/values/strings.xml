@@ -22,6 +22,8 @@
 
 
     <string-array name="events_array">
+        <item>800</item>
+        <item>1600</item>
         <item>3000</item>
         <item>5000</item>
         <item>10000</item>
