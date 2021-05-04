@@ -85,4 +85,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distance" />
 
+    <Button
+        android:id="@+id/clearRecordButton"
+        android:layout_width="67dp"
+        android:layout_height="39dp"
+        android:text="@string/clear_records"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

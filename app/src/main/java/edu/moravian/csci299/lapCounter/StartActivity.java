@@ -22,6 +22,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private SharedPreferences preferences;
     private String eventKey;
     private TextView recordText;
+    private String m800Key = "800_preference";
+    String m1600Key = "1600_preference";
+    String m3000Key = "3000_preference";
+    String m5000Key = "5000_preference";
+    String m10000Key = "10000_preference";
+
+
+    String eventSelectedKey = "M800";
 
 
     /**
@@ -38,10 +46,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         eventRecordText = findViewById(R.id.eventRecord);
         this.preferences = this.getSharedPreferences("edu.moravian.csci299.lapCounter", Context.MODE_PRIVATE);
 
-//        To Clear the shared preferences
-//        SharedPreferences.Editor preferencesEditor = preferences.edit();
-//        preferencesEditor.clear();
-//        preferencesEditor.commit();
+        findViewById(R.id.clearRecordButton).setOnClickListener(this);
 
         // Set up the "Next" button
         findViewById(R.id.nextButton).setOnClickListener(this);
@@ -81,7 +86,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("eventKey", eventKey);
             intent.putExtra("eventRecord", eventRecord);
             startActivity(intent);
-        } else {
+        } else if(v == findViewById(R.id.clearRecordButton)){
+            SharedPreferences.Editor preferencesEditor = preferences.edit();
+            preferencesEditor.remove(eventSelectedKey);
+            preferencesEditor.apply();
+            setHighScoreText();
+        }
+        else {
             Intent intentHelp = new Intent(this, HelpActivity.class);
             startActivity(intentHelp);
         }
@@ -100,6 +111,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         laps = event.distance/400.0;
         distance.setText(String.valueOf(event.distance));
         setHighScoreText();
+        if(event.distance==800) eventSelectedKey = m800Key;
+        else if(event.distance==1600) eventSelectedKey = m1600Key;
+        else if(event.distance==3000) eventSelectedKey = m3000Key;
+        else if(event.distance==5000) eventSelectedKey = m5000Key;
+        else if(event.distance==10000) eventSelectedKey = m10000Key;
     }
 
     /**
@@ -107,27 +123,22 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
      */
     private void setHighScoreText(){
         if (laps == 2){
-            String m800Key = "800_preference";
             eventRecord = preferences.getLong(m800Key, 0);
             eventKey = m800Key;
         }
         else if (laps == 4){
-            String m1600Key = "1600_preference";
             eventRecord = preferences.getLong(m1600Key, 0);
             eventKey = m1600Key;
         }
         else if (laps == 7.5){
-            String m3000Key = "3000_preference";
             eventRecord = preferences.getLong(m3000Key, 0);
             eventKey = m3000Key;
         }
         else if (laps == 12.5){
-            String m5000Key = "5000_preference";
             eventRecord = preferences.getLong(m5000Key, 0);
             eventKey = m5000Key;
         }
         else{
-            String m10000Key = "10000_preference";
             eventRecord = preferences.getLong(m10000Key, 0);
             eventKey = m10000Key;
 

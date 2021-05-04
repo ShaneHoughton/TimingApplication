@@ -21,6 +21,7 @@
     <string name="record_text">Event Record:</string>
     <string name="name">name</string>
     <string name="lap">Lap</string>
+    <string name="clear_records">Clear Record</string>
 
 
     <string-array name="events_array">
