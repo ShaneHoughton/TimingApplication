@@ -14,22 +14,21 @@ import androidx.fragment.app.FragmentManager;
 public class StartActivity extends AppCompatActivity implements View.OnClickListener, EventPickerDialog.Callbacks {
 
 
-    String [] events;
-    double laps = 0;
-    TextView distance;
-    TextView eventRecordText;
+    private double laps = 0;
+    private TextView distance;
+    private TextView eventRecordText;
     long eventRecord;
     private SharedPreferences preferences;
     private String eventKey;
     private TextView recordText;
     private String m800Key = "800_preference";
-    String m1600Key = "1600_preference";
-    String m3000Key = "3000_preference";
-    String m5000Key = "5000_preference";
-    String m10000Key = "10000_preference";
+    private String m1600Key = "1600_preference";
+    private String m3000Key = "3000_preference";
+    private String m5000Key = "5000_preference";
+    private String m10000Key = "10000_preference";
 
 
-    String eventSelectedKey = "M800";
+    private String eventSelectedKey = "M800";
 
 
     /**
@@ -42,7 +41,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        events = getResources().getStringArray(R.array.events_array);
         eventRecordText = findViewById(R.id.eventRecord);
         this.preferences = this.getSharedPreferences("edu.moravian.csci299.lapCounter", Context.MODE_PRIVATE);
 

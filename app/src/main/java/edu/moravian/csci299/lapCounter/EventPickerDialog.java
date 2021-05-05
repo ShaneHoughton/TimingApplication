@@ -64,6 +64,7 @@ public class EventPickerDialog extends DialogFragment {
             dialog.dismiss();
             ((Callbacks)getActivity()).onEventSelected(EVENTS[which]);
         });
+        b.setTitle("Pick a Distance");
         return b.create();
     }
 

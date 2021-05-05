@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+
     <EditText
         android:id="@+id/runnerName"
         android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
         android:layout_weight="1"
         android:importantForAutofill="no"
         android:text="@string/name"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         tools:ignore="LabelFor" />
 
     <Space

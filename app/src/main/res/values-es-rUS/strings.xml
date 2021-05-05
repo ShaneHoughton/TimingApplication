@@ -3,7 +3,7 @@
     <string name="app_name">Lap Counter</string>
     <string name="select_a_distance">Seleccionar una Distancia</string>
     <string name="next">Proximo</string>
-    <string name="App">Applicación</string>
+    <string name="App">Temporizador de vueltas</string>
     <string name="help">Ayuda</string>
     <string name="helpLine1">Elija un evento de la lista para establecer el número de vueltas de la carrera.</string>
     <string name="helpLine2">Presione + en la barra de menú para agregar un corredor y haga clic en su número y nombre para editar.</string>
