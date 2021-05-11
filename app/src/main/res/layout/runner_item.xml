@@ -10,16 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/number"
-        android:layout_width="26dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        tools:ignore="LabelFor" />
-
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,27 +31,82 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/lapsToGo"
+    <LinearLayout
+        android:id="@+id/lapsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="@font/allerta"
-        android:text="@string/lapstogo" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lapsToGoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lapstogo" />
+
+        <TextView
+            android:id="@+id/lapsToGo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/allerta"
+            android:lines="1"
+            android:text="@string/lapstogo" />
+    </LinearLayout>
 
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/projectedTime"
+    <LinearLayout
+        android:id="@+id/projectedContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="@font/audiowide"
-        android:text="@string/_00_00"
-        android:textAlignment="center" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/projectedTimeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="@string/projected" />
+
+        <TextView
+            android:id="@+id/projectedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/audiowide"
+            android:text="@string/_00_00"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/splitContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lapSplitText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lap_split" />
+
+        <TextView
+            android:id="@+id/lapSplit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/audiowide"
+            android:text="@string/_00_00"
+            android:textAlignment="center" />
+    </LinearLayout>
 
     <Space
         android:layout_width="wrap_content"

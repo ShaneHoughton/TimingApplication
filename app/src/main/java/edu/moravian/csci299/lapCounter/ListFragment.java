@@ -194,8 +194,9 @@ public class ListFragment extends Fragment{
 
         //TextViews and buttons
         private final EditText name;
-        private final EditText number;
+//        private final EditText number;
         private final TextView lapsToGo;
+        private TextView lapSplit;
         private final TextView projectedTime;
         private final Button lap;
         private final LinearLayout linearLayout;
@@ -214,9 +215,11 @@ public class ListFragment extends Fragment{
             name = runnerView.findViewById(R.id.runnerName);
             lapsToGo = runnerView.findViewById(R.id.lapsToGo);
             lap = runnerView.findViewById(R.id.lap);
-            number = runnerView.findViewById(R.id.number);
+//            number = runnerView.findViewById(R.id.number);
             projectedTime = runnerView.findViewById(R.id.projectedTime);
             linearLayout = runnerView.findViewById(R.id.linearLayout);
+            lapSplit = runnerView.findViewById(R.id.lapSplit);
+
 
             green = ContextCompat.getColor(getContext(), R.color.green);
             blue = ContextCompat.getColor(getContext(), R.color.blue);
@@ -361,9 +364,17 @@ public class ListFragment extends Fragment{
             holder.runner = item;
             holder.name.setText(item.name);
             holder.lapsToGo.setText(Double.toString(item.lapsToGo));
-            holder.number.setText(Integer.toString(item.number));
+//            holder.number.setText(Integer.toString(item.number));
 
             holder.lap.setOnClickListener(v -> {
+
+                long currentTimeInMilliseconds = callbacks.getTime();
+                int seconds = TimeUtils.getSeconds(currentTimeInMilliseconds);
+                int minutes = TimeUtils.getMinutes(currentTimeInMilliseconds);
+                holder.lapSplit.setText(minutes + ":" + seconds);
+
+
+
                 if(item.lapsToGo == 7.5 || item.lapsToGo == 12.5){
                     item.lapsToGo = item.lapsToGo - 0.5;
                     holder.lapsToGo.setText(Integer.toString((int)item.lapsToGo));
@@ -415,25 +426,25 @@ public class ListFragment extends Fragment{
                 }
             });
 
-            holder.number.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if(!s.toString().equals("")) {
-                        item.number = Integer.parseInt(s.toString());
-                        RunnerRepository.get().updateRunner(item);
-                    }
-                }
-            });
+//            holder.number.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//                    if(!s.toString().equals("")) {
+//                        item.number = Integer.parseInt(s.toString());
+//                        RunnerRepository.get().updateRunner(item);
+//                    }
+//                }
+//            });
         }
 
         /**

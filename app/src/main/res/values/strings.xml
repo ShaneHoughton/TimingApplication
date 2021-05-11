@@ -22,6 +22,8 @@
     <string name="name">name</string>
     <string name="lap">Lap</string>
     <string name="clear_records">Clear Record</string>
+    <string name="lap_split">Split</string>
+    <string name="projected">Projected</string>
 
 
     <string-array name="events_array">

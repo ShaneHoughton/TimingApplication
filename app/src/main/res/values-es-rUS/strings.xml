@@ -21,4 +21,6 @@
     <string name="name">Nombre</string>
     <string name="lap">Vuelta</string>
     <string name="clear_records">Eliminar Récord</string>
+    <string name="lap_split">Split</string>
+    <string name="projected">Projected</string>
 </resources>
